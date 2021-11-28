@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Npgsql.EntityFrameworkCore.PostgreSQL;
+using Microsoft.AspNetCore.Mvc;
+
+
+
 
 namespace RollingRetention.Models
 {
@@ -23,6 +27,9 @@ namespace RollingRetention.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            //var connectionString = "Host = localhost; Port = 5432; Database = RollingRetention; Username = postgres; Password = 123456";
+            //var connection = new Npgsql.NpgsqlConnection (connectionString);
+            //optionsBuilder.UseNpgsql(connection);
 
         }
 

@@ -39,9 +39,11 @@ namespace RollingRetention
             services.AddJsEngineSwitcher(options => options.DefaultEngineName = ChakraCoreJsEngine.EngineName).AddChakraCore();
 
             //add base servisez
-            services.AddEntityFrameworkNpgsql().AddDbContext<UserActivityContext>();
+            //services.AddEntityFrameworkNpgsql().AddDbContext<UserActivityContext>();
             services.AddDbContext<UserActivityContext>(options => options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddControllers();
             services.AddControllersWithViews();
+
 
 
         }

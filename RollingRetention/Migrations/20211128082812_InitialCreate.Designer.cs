@@ -10,7 +10,7 @@ using RollingRetention.Models;
 namespace RollingRetention.Migrations
 {
     [DbContext(typeof(UserActivityContext))]
-    [Migration("20211127075006_InitialCreate")]
+    [Migration("20211128082812_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -18,7 +18,7 @@ namespace RollingRetention.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 63)
-                .HasAnnotation("ProductVersion", "5.0.10")
+                .HasAnnotation("ProductVersion", "5.0.12")
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
             modelBuilder.Entity("RollingRetention.Models.UserActivity", b =>
