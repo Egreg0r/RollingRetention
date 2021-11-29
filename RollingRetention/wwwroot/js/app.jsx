@@ -149,6 +149,6 @@ class InputTable extends React.Component {
 }
 
 ReactDOM.render(
-    <InputTable apiUrl="/api/UserActivity" />,
+    <InputTable apiUrl="/api/UserActivitys" />,
     document.getElementById("app")
 );
