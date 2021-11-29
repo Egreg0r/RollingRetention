@@ -21,8 +21,7 @@ namespace RollingRetention.Models
         public UserActivityContext(DbContextOptions<UserActivityContext> options) : base(options)
         {
             //Database.EnsureDeleted();
-            //Database.EnsureCreated();
-            //Database.Migrate();
+           // Database.EnsureCreated();
             
             
 
@@ -36,7 +35,7 @@ namespace RollingRetention.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //base.OnModelCreating(modelBuilder);
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

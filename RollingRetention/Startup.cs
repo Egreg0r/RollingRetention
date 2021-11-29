@@ -61,7 +61,7 @@ namespace RollingRetention
             app.UseStaticFiles();
             
             if(env.IsDevelopment())
-            {
+            { 
                 context.Database.EnsureCreated();
             }
 
