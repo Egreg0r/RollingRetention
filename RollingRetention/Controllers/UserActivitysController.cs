@@ -30,18 +30,19 @@ namespace RollingRetention.Controllers
 
         //GET: api/<UserActivitysController>
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<UserActivity>>> GetAll()
+        public async Task<ActionResult<IEnumerable<UserActivity>>> GetLast()
         {
-            return await _context.userActivitys.ToListAsync();
+            var five = await _context.userActivitys.ToListAsync();
+            return five.TakeLast(5).ToList();
         }
 
+
         // GET api/<UserActivitysController>/5
-        [HttpGet("{id}")]
-        //public async Task<ActionResult<decimal>> GetUserActivity(int id)
-        public async Task<ActionResult<decimal>> GetUserActivity(int id)
+        [HttpGet("{day}")]
+        public async Task<ActionResult<decimal>> GetUserActivity(int day)
         {
             //стартовая дата для подсчета
-            var startDate = DateTime.Today.AddDays(-id);
+            var startDate = DateTime.Today.AddDays(-day);
 
             // выбираем все позиции где LastActivity не меньше нужной даты. 
             var activityList = await _context.userActivitys.Where(user => user.LastActivityDate >= startDate).Select(user =>user.Id).ToListAsync();
@@ -78,8 +79,6 @@ namespace RollingRetention.Controllers
             }
             //_context.userActivitys.Add(activitys);
             await _context.SaveChangesAsync();
-
-            //return CreatedAtAction("GetAll", new { id = activitys.First() }, activitys );
             return NoContent();
         }
 
