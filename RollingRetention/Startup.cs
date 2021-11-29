@@ -39,7 +39,6 @@ namespace RollingRetention
             services.AddJsEngineSwitcher(options => options.DefaultEngineName = ChakraCoreJsEngine.EngineName).AddChakraCore();
 
             //add base servisez
-            //services.AddEntityFrameworkNpgsql().AddDbContext<UserActivityContext>();
             services.AddDbContext<UserActivityContext>(options => options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
             services.AddControllers();
             services.AddControllersWithViews();
@@ -49,7 +48,7 @@ namespace RollingRetention
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, UserActivityContext context )
         {
             if (env.IsDevelopment())
             {
@@ -61,14 +60,16 @@ namespace RollingRetention
             app.UseDefaultFiles();
             app.UseStaticFiles();
             
+            if(env.IsDevelopment())
+            {
+                context.Database.EnsureCreated();
+            }
+
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-                //endpoints.MapControllerRoute(
-                //    name: "default",
-                //    pattern: "{controller=UserActivitys}/{action=Index}/{id?}");
 
             });
         }

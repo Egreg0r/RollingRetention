@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Npgsql.EntityFrameworkCore.PostgreSQL;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.DependencyInjection;
 
 
 
@@ -21,21 +22,21 @@ namespace RollingRetention.Models
         {
             //Database.EnsureDeleted();
             //Database.EnsureCreated();
+            //Database.Migrate();
+            
+            
 
         }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //var connectionString = "Host = localhost; Port = 5432; Database = RollingRetention; Username = postgres; Password = 123456";
-            //var connection = new Npgsql.NpgsqlConnection (connectionString);
-            //optionsBuilder.UseNpgsql(connection);
 
         }
 
-        //protected override void OnModelCreating(ModelBuilder modelBuilder)
-        //{
-        //    base.OnModelCreating(modelBuilder);
-        //}
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            //base.OnModelCreating(modelBuilder);
+        }
     }
 }
