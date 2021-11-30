@@ -20,13 +20,14 @@ namespace RollingRetention.Controllers
         {
             _context = context;
 
-            if (_context.userActivitys.Count() == 0)
-            {
-                _context.userActivitys.Add(new UserActivity { UserId = 3000, LastActivityDate = DateTime.Now.Date, RegistrationDate = Convert.ToDateTime("11.11.2020") });
-                _context.userActivitys.Add(new UserActivity { UserId = 2000, LastActivityDate = Convert.ToDateTime("23.11.2021"), RegistrationDate = Convert.ToDateTime("01.01.2021") });
-                _context.SaveChanges();
-            }
+            //if (_context.userActivitys.Count() == 0)
+            //{
+            //    _context.userActivitys.Add(new UserActivity { UserId = 3000, LastActivityDate = DateTime.Now.Date, RegistrationDate = Convert.ToDateTime("11.11.2020") });
+            //    _context.userActivitys.Add(new UserActivity { UserId = 2000, LastActivityDate = Convert.ToDateTime("23.11.2021"), RegistrationDate = Convert.ToDateTime("01.01.2021") });
+            //    _context.SaveChanges();
+            //}
         }
+        private static List<UserActivity> tableUser = new List<UserActivity>();
 
         //GET: api/<UserActivitysController>
         [HttpGet]
@@ -71,16 +72,30 @@ namespace RollingRetention.Controllers
 
         // POST api/<UserActivitysController>
         [HttpPost]
-        public async Task<ActionResult<IEnumerable<UserActivity>>> Post(IEnumerable<UserActivity> activitys)
+        public ActionResult<IEnumerable<UserActivity>> Post(UserActivity activity)
         {
-            foreach (var a in activitys)
-            {
-                _context.userActivitys.Add(a);
-            }
-            //_context.userActivitys.Add(activitys);
-            await _context.SaveChangesAsync();
-            return NoContent();
+            List<UserActivity> tableUser = new List<UserActivity>();
+            tableUser.Add(activity);
+            //return NoContent();
+            return tableUser;
         }
+
+        //Save table in base
+        // POST api/<UserActivitysController>/save
+        [HttpPost("Save")]
+        public async Task<ActionResult<IEnumerable<UserActivity>>> Save(IEnumerable<UserActivity> activitys)
+        {
+            foreach (var item in activitys)
+            {
+                _context.userActivitys.Add(item);
+            }
+            await _context.SaveChangesAsync();
+            return Ok(activitys);
+        }
+
+
+
+
 
         // PUT api/<UserActivitysController>/5
         [HttpPut("{id}")]

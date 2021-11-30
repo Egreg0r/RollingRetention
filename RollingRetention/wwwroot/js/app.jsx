@@ -25,47 +25,52 @@ class Form extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { userId: "", registrationDate: "", lastActivityDate "" };
+        this.state = { userId: 0, registrationDate: "", lastActivityDate: "" };
         this.onSubmit = this.onSubmit.bind(this);
-        this.onNameChange = this.onNameChange.bind(this);
-        this.onPriceChange = this.onPriceChange.bind(this);
+        this.onUserIdChange = this.onUserIdChange.bind(this);
+        this.onRegistrChange = this.onRegistrChange.bind(this);
+        this.onLastChange = this.onLastChange.bind(this);
     }
-    onNameChange(e) {
-        this.setState({ name: e.target.value });
+    onUserIdChange(e) {
+        this.setState({ userId: e.target.value });
     }
-    onPriceChange(e) {
-        this.setState({ price: e.target.value });
+    onRegistrChange(e) {
+        this.setState({ registr: e.target.value });
     }
+    onLastChange(e) {
+        this.setState({ last: e.target.value });
+    }
+
     onSubmit(e) {
         e.preventDefault();
-        var Name = this.state.name.trim();
-        var Price = this.state.price;
-        if (!Name || Price == "") {
+        var actUserID = this.state.userId;
+        var actRegistr = this.state.registr;
+        var actLast = this.state.last;
+        if (!actUserID || actRegistr == "" || actLast == "" ) {
             return;
         }
-        this.props.onSubmit({ name: Name, price: Price });
-        this.setState({ name: "", price: "" });
+        this.props.onSubmit({ userId: actUserID, registr: actRegistr, last: actLast});
+        this.setState({ userId: "", registr: "" , last: "" });
     }
+    
     render() {
         return (
-            <form onSubmit={this.onSubmit}>
+            < form onSubmit={this.onSubmit} >
                 <p>
                     <input type="number"
                         placeholder="User Id"
-                        value={this.state.name}
-                        onChange={this.onNameChange} />
-                </p>
-                <p>
+                        value={this.state.userId}
+                        onChange={this.onUserIdChange} />
+
                     <input type="date"
                         placeholder="Date Registration"
-                        value={this.state.price}
-                        onChange={this.onPriceChange} />
-                </p>
-                <p>
+                        value={this.state.registr}
+                        onChange={this.onRegistrChange} />
+
                     <input type="date"
                         placeholder="Date Last Activity"
-                        value={this.state.price}
-                        onChange={this.onPriceChange} />
+                        value={this.state.last}
+                        onChange={this.onLastChange} />
                 </p>
 
                 <input type="submit" value="Save" />
@@ -100,12 +105,14 @@ class InputTable extends React.Component {
     }
 
     // Add object
-    onAdd(activity) {
-        if (activity) {
+    onAdd(activitys) {
+        if (activitys) {
 
             const data = new FormData();
-            data.append("name", activity.name);
-            data.append("price", activity.price);
+            data.append("userId", activitys.userId);
+            data.append("registrationDate", activitys.registr);
+            data.append("lastActivityDate", activitys.last);
+            console.log(data);
             var xhr = new XMLHttpRequest();
 
             xhr.open("post", this.props.apiUrl, true);
@@ -117,40 +124,7 @@ class InputTable extends React.Component {
             xhr.send(data);
         }
     }
-    // delete object
-    onRemove(activity) {
 
-        if (activity) {
-            var url = this.props.apiUrl + "/" + activity.id;
-
-            var xhr = new XMLHttpRequest();
-            xhr.open("delete", url, true);
-            xhr.setRequestHeader("Content-Type", "application/json");
-            xhr.onload = function () {
-                if (xhr.status === 200) {
-                    this.loadData();
-                }
-            }.bind(this);
-            xhr.send();
-        }
-    }
-    render() {
-
-        var remove = this.onRemove;
-        return <div>
-            <Form onSubmit={this.onAdd} />
-            <h2>Table activitys</h2>
-            <div>
-                {
-                    this.state.activitys.map(function (activity) {
-
-                        return <Activity key={activity.id} activity={activity} onRemove={remove} />
-                    })
-                }
-            </div>
-        </div>;
-    }
-}
 
 ReactDOM.render(
     <InputTable apiUrl="/api/UserActivitys" />,
