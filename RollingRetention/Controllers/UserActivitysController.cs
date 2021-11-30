@@ -70,32 +70,18 @@ namespace RollingRetention.Controllers
             return rolling;
         }
 
+        //Save table in base
         // POST api/<UserActivitysController>
         [HttpPost]
-        public ActionResult<IEnumerable<UserActivity>> Post(UserActivity activity)
-        {
-            List<UserActivity> tableUser = new List<UserActivity>();
-            tableUser.Add(activity);
-            //return NoContent();
-            return tableUser;
-        }
-
-        //Save table in base
-        // POST api/<UserActivitysController>/save
-        [HttpPost("Save")]
         public async Task<ActionResult<IEnumerable<UserActivity>>> Save(IEnumerable<UserActivity> activitys)
         {
             foreach (var item in activitys)
             {
-                _context.userActivitys.Add(item);
+                _context.userActivitys.Add(new UserActivity { UserId = item.UserId, LastActivityDate = item.LastActivityDate, RegistrationDate=item.RegistrationDate }) ;
             }
             await _context.SaveChangesAsync();
-            return Ok(activitys);
+            return Ok();
         }
-
-
-
-
 
         // PUT api/<UserActivitysController>/5
         [HttpPut("{id}")]

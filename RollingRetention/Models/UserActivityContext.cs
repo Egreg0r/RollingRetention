@@ -20,11 +20,7 @@ namespace RollingRetention.Models
 
         public UserActivityContext(DbContextOptions<UserActivityContext> options) : base(options)
         {
-            //Database.EnsureDeleted();
-           // Database.EnsureCreated();
             
-            
-
         }
 
 

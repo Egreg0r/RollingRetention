@@ -61,8 +61,15 @@ namespace RollingRetention
             app.UseStaticFiles();
             
             if(env.IsDevelopment())
-            { 
-                context.Database.EnsureCreated();
+            {
+                try
+                {
+                    context.Database.EnsureCreated();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+                }
             }
 
             app.UseRouting();

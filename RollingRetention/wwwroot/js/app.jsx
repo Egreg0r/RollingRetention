@@ -124,7 +124,7 @@ class InputTable extends React.Component {
             xhr.send(data);
         }
     }
-
+}
 
 ReactDOM.render(
     <InputTable apiUrl="/api/UserActivitys" />,
